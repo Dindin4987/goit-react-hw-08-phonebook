@@ -7,8 +7,8 @@ import { useAuth } from '../../redux/hooks/useAuth';
  */
 
 export const PrivateRoute = ({ component: Component, redirectTo = '/' }) => {
-  const { isLoggedIn } = useAuth();
-  const shouldRedirect = !isLoggedIn;
+  const { isLoggedIn, isRefreshing } = useAuth();
+  const shouldRedirect = !isLoggedIn && !isRefreshing;
 
   return shouldRedirect ? <Navigate to={redirectTo} /> : <Component />;
 };
