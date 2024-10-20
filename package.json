@@ -22,6 +22,8 @@
     "web-vitals": "^2.1.3"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -48,7 +50,9 @@
   },
   "description": "Acest proiect a fost creat cu ajutorul [Create React App](https://github.com/facebook/create-react-app). Pentru prezentări și configurarea de funcții suplimentare [consultă documentația](https://facebook.github.io/create-react-app/docs/getting-started).",
   "main": "index.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "gh-pages": "^6.2.0"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"
