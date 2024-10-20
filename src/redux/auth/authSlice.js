@@ -7,48 +7,28 @@ export const authSlice = createSlice({
     user: { name: null, email: null },
     token: null,
     isLoggedIn: false,
-    isLoading: false,
-    isError: false,
     isRefreshing: false,
+    isLoading: false,      // Added this
+    isError: false,        // Added this
   },
-  reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(register.pending, (state, _action) => {
-        state.isLoading = true;
-      })
       .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
-        state.isLoggedIn = true;
-      })
-      .addCase(register.rejected, (state, _action) => {
-        state.isLoggedIn = false;
-        state.isError = true;
-      })
-      .addCase(login.pending, (state, _action) => {
-        state.isLoading = true;
+        // state.isLoggedIn = true;
+        state.isError = false;   // Reset error state on success
       })
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.user;
         state.token = action.payload.token;
         state.isLoggedIn = true;
-      })
-      .addCase(login.rejected, (state, _action) => {
-        state.isLoggedIn = false;
-        state.isError = true;
-      })
-      .addCase(logout.pending, (state, _action) => {
-        state.isLoading = true;
+        state.isError = false;   // Reset error state on success
       })
       .addCase(logout.fulfilled, (state, action) => {
         state.user = null;
         state.token = null;
         state.isLoggedIn = false;
-      })
-      .addCase(logout.rejected, (state, _action) => {
-        state.isLoggedIn = true;
-        state.isError = true;
       })
       .addCase(refreshUser.pending, (state, _action) => {
         state.isLoading = true;
@@ -60,11 +40,13 @@ export const authSlice = createSlice({
         state.user = action.payload;
         state.isRefreshing = false;
         state.isLoggedIn = true;
+        state.isError = false;   // Reset error state on success
       })
       .addCase(refreshUser.rejected, (state, _action) => {
+        state.isLoading = false;  // Set loading to false on error
         state.isLoggedIn = false;
         state.isRefreshing = false;
-        state.isError = true;
+        state.isError = true;    // Set error state on failure
       });
   },
 });
