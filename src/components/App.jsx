@@ -19,9 +19,12 @@ export const App = () => {
   const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(refreshUser());
-    navigate('/contacts');
-  }, [dispatch, navigate]);
+    dispatch(refreshUser()).then(() => {
+      if (!isRefreshing) {
+        navigate('/contacts');
+      }
+    });
+  }, [dispatch, navigate, isRefreshing]);
 
   return isRefreshing ? (
     <h1>Refreshing user... Please wait.</h1>
