@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import { SharedLayout } from 'pages/SharedLayout';
 import { RegisterPage } from 'pages/RegisterPage';
 import { LoginPage } from 'pages/LoginPage';
@@ -14,20 +14,15 @@ import { refreshUser } from '../redux/auth/authOperations';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { isRefreshing } = useAuth();
 
   useEffect(() => {
-    dispatch(refreshUser()).then(() => {
-      if (!isRefreshing) {
-        navigate('/contacts');
-      }
-    });
-  }, [dispatch, navigate, isRefreshing]);
+    dispatch(refreshUser());
+  }, [dispatch]);
 
   return isRefreshing ? (
-    <h1>Refreshing user... Please wait.</h1>
+    <h1>Refreshing user... Please wait...</h1>
   ) : (
     <>
       <Routes>
